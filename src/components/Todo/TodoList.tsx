@@ -1,25 +1,19 @@
-import type { ITask } from "../../types"
 import Task from "./Task"
+import { useShallow } from 'zustand/react/shallow';
 
-function TodoList (
-  { tasks, onDeleteTask, onToggleTask, firstIncompleteTaskRef, firstIncompleteTask } 
-  : 
-  { tasks: ITask[], onDeleteTask: (id: string) => void, onToggleTask: (id: string) => void, firstIncompleteTaskRef: React.RefObject<HTMLLIElement | null>, firstIncompleteTask: ITask | undefined } ) {
+import { useTodoStore, selectRenderedTasks, selectFirstIncompleteTaskId } from "../../store/useTodoStore"
 
-  console.log( "Render TodoList" )
+function TodoList () {
+
+  const tasks = useTodoStore(useShallow(selectRenderedTasks));
+  const firstIncompleteTaskId = useTodoStore(selectFirstIncompleteTaskId);
 
   return (
     <ul className="todo__list">
       {tasks.map(task => {
-        if ( firstIncompleteTask && task.id === firstIncompleteTask.id ) {
-          return (
-            <Task key={task.id} task={task} onDelete={onDeleteTask} onToggle={onToggleTask} ref={firstIncompleteTaskRef} />
-          )
-        } else {
-          return (
-            <Task key={task.id} task={task} onDelete={onDeleteTask} onToggle={onToggleTask} />
-          )
-        }
+        return (
+          <Task key={task.id} task={task} attention={(firstIncompleteTaskId === task.id) ? true : undefined } />
+        )
       })}
     </ul>
   )

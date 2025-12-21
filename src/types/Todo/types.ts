@@ -18,6 +18,5 @@ export interface IInputProps {
 
 export interface ITaskProps {
   task: ITask;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
+  attention?: boolean;
 }

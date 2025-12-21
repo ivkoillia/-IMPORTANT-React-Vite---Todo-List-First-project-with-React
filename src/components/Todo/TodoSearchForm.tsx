@@ -1,13 +1,11 @@
 import { memo } from "react"
 import Input from "../Input"
+import { useTodoStore } from "../../store/useTodoStore";
 
 
-function TodoSearchForm ( 
-  { onSearch } 
-  : 
-  { onSearch?: (query: string) => void } ) {
+function TodoSearchForm () {
 
-  console.log( "Render TodoSearchForm" )
+  const onSearch = useTodoStore((state) => state.setSearchTaskInputQuery);
 
   return (
     <form className="todo__search_form" onSubmit = {(e) => e.preventDefault()}>

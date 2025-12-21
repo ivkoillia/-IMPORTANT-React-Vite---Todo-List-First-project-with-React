@@ -3,13 +3,13 @@ import { memo } from "react";
 import Button from "../Button"
 import Input from "../Input"
 
-function TodoAddForm (
-  { onSubmit, inputRef } 
-  : 
-  { onSubmit?: () => void, inputRef?: React.RefObject<HTMLInputElement | null> } )
+import { useTodoStore } from "../../store/useTodoStore"
+
+function TodoAddForm ()
   {
 
-  console.log( "Render TodoAddForm" )
+  const onSubmit = useTodoStore((state) => state.addTask);
+  const onInput = useTodoStore((state) => state.setAddTaskInputQuery);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement >) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ function TodoAddForm (
 
   return (
     <form onSubmit={ e => handleSubmit(e)} className="todo__add_form">
-      <Input ref={inputRef} name="title" type="text" placeholder="New task description" className="todo__add_form-input" />
+      <Input onInput={onInput} name="title" type="text" placeholder="New task description" className="todo__add_form-input" />
       <Button type="submit" className="todo__add_form-submit" ariaLabel="add new task button">Add</Button>
     </form>
   )

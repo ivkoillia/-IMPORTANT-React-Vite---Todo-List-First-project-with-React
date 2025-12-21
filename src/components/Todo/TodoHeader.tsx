@@ -1,7 +1,6 @@
 import { memo } from "react";
 
 function TodoHeader () {
-    console.log( "Render TodoHeader" )
 
     return (
         <header className="todo__header">
