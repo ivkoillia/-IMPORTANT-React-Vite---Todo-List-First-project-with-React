@@ -9,19 +9,20 @@ function TodoAddForm ()
   {
 
   const onSubmit = useTodoStore((state) => state.addTask);
+  const inputValue = useTodoStore((state) => state.addTaskInputQuery);
   const onInput = useTodoStore((state) => state.setAddTaskInputQuery);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement >) => {
     e.preventDefault();
 
-    if (onSubmit) {
-      onSubmit();
+    if (onSubmit && inputValue.trim()) {
+      onSubmit( inputValue );
     }
   }
 
   return (
-    <form onSubmit={ e => handleSubmit(e)} className="todo__add_form">
-      <Input onInput={onInput} name="title" type="text" placeholder="New task description" className="todo__add_form-input" />
+    <form onSubmit={ handleSubmit} className="todo__add_form">
+      <Input value={inputValue} onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInput(e.target.value)} name="title" type="text" placeholder="New task description" className="todo__add_form-input" />
       <Button type="submit" className="todo__add_form-submit" ariaLabel="add new task button">Add</Button>
     </form>
   )

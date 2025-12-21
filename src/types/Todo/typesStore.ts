@@ -2,7 +2,7 @@ import type { ITask } from './types';
 
 export interface ITodoState {
     tasks: ITask[];
-    addTask: () => void;
+    addTask: ( title : string ) => void;
     deleteTask: (id: string) => void;
     toggleTask: (id: string) => void;
     clearTasks: () => void;

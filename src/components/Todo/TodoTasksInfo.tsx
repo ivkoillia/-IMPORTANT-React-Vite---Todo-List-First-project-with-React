@@ -1,13 +1,11 @@
-import { memo } from "react";
 import Button from "../Button";
 
-import { useTodoStore, selectTasksLength, selectCompletedTasksLength  } from "../../store/useTodoStore";
+import { useTodoStore, selectTasksStats  } from "../../store/useTodoStore";
+import { useShallow } from "zustand/react/shallow";
 
 function TodoTasksInfo (){
 
-  const tasksLength = useTodoStore(selectTasksLength);
-  const completedTasksCounter = useTodoStore(selectCompletedTasksLength);
-
+  const { total, completed, remaining, percent } = useTodoStore(useShallow(selectTasksStats));
   const clearTasks = useTodoStore((state) => state.clearTasks);
 
   const clearHandler = () => {
@@ -19,7 +17,7 @@ function TodoTasksInfo (){
   return (
     <div className="todo__tasks-info">
       <div className="todo__tasks-counter">
-        <span className="todo__tasks-counter-completed">{completedTasksCounter}</span> of <span className="todo__tasks-counter-total">{tasksLength}</span> tasks completed
+        <span className="todo__tasks-counter-completed">{completed}</span> of <span className="todo__tasks-counter-total">{total}</span> tasks completed ( <span className="todo__tasks-counter-remaining">{remaining} tasks {100 - percent}%</span> remaining )
       </div>
       <div className="todo__tasks-clear">
         <Button type="button" className="todo__tasks-clear_button" ariaLabel="delete all tasks button" onClick={clearHandler}>Delete All</Button>
@@ -29,4 +27,4 @@ function TodoTasksInfo (){
 }
 
 
-export default memo(TodoTasksInfo)
+export default TodoTasksInfo
