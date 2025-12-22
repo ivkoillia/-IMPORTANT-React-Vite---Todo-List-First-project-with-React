@@ -1,12 +1,10 @@
 import Task from "./Task"
-import { useShallow } from 'zustand/react/shallow';
 
-import { useTodoStore, selectRenderedTasks, selectFirstIncompleteTaskId } from "../../store/useTodoStore"
+import useTodoTasks from "../../hooks/todo/useTodoTasks";
 
 function TodoList () {
 
-  const tasks = useTodoStore(useShallow(selectRenderedTasks));
-  const firstIncompleteTaskId = useTodoStore(selectFirstIncompleteTaskId);
+  const { tasks, firstIncompleteTaskId } = useTodoTasks();
 
   return (
     <ul className="todo__list">

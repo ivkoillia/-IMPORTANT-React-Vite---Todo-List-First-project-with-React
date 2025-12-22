@@ -1,11 +1,11 @@
 import { memo, type ChangeEvent } from "react"
 import Input from "../Input"
-import { useTodoStore } from "../../store/useTodoStore";
+
+import useTodoSearchTaskInputQuery from "../../hooks/todo/useTodoSearchTaskInputQuery";
 
 
 function TodoSearchForm() {
-  const onSearch = useTodoStore((state) => state.setSearchTaskInputQuery);
-  const searchQuery = useTodoStore((state) => state.searchTaskInputQuery);
+  const { inputValue: searchQuery, setInput: onSearch } = useTodoSearchTaskInputQuery();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onSearch(e.target.value);
@@ -18,7 +18,7 @@ function TodoSearchForm() {
         placeholder="Search task" 
         className="todo__search" 
         value={searchQuery} // Делаем поиск контролируемым
-        onInput={handleChange} // Передаем значение из события в стор
+        onChange={handleChange} // Передаем значение из события в стор
       />
     </form>
   );

@@ -3,14 +3,15 @@ import { memo } from "react";
 import Button from "../Button"
 import Input from "../Input"
 
-import { useTodoStore } from "../../store/useTodoStore"
+import useTodoTasksActions from "../../hooks/todo/useTodoTasksActions"
+import useTodoAddTaskInputQuery from "../../hooks/todo/useTodoAddTaskInputQuery";
+
 
 function TodoAddForm ()
   {
 
-  const onSubmit = useTodoStore((state) => state.addTask);
-  const inputValue = useTodoStore((state) => state.addTaskInputQuery);
-  const onInput = useTodoStore((state) => state.setAddTaskInputQuery);
+  const { addTask: onSubmit } = useTodoTasksActions();
+  const { inputValue: inputValue, setInput: onInput } = useTodoAddTaskInputQuery();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement >) => {
     e.preventDefault();

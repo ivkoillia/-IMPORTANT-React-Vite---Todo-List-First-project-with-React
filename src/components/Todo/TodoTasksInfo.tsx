@@ -1,12 +1,12 @@
 import Button from "../Button";
 
-import { useTodoStore, selectTasksStats  } from "../../store/useTodoStore";
-import { useShallow } from "zustand/react/shallow";
+import useTodoTasksActions from "../../hooks/todo/useTodoTasksActions";
+import useTodoTasksStats from "../../hooks/todo/useTodoTasksStats";
 
 function TodoTasksInfo (){
 
-  const { total, completed, remaining, percent } = useTodoStore(useShallow(selectTasksStats));
-  const clearTasks = useTodoStore((state) => state.clearTasks);
+  const { completed, total, remaining, percent } = useTodoTasksStats();
+  const { clearTasks } = useTodoTasksActions();
 
   const clearHandler = () => {
     if (window.confirm('Вы уверены, что хотите удалить все задачи?')) {
