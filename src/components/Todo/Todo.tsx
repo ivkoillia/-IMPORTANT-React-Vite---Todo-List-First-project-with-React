@@ -5,8 +5,15 @@ import TodoSearchForm from "./TodoSearchForm"
 import TodoTasksInfo from "./TodoTasksInfo"
 import Button from "../Button"
 
+import { useEffect } from "react"
+import { useTodoStore } from "../../store/useTodoStore"
 
 function Todo () {
+  const loadTasks = useTodoStore((state) => state.loadTasks);
+
+  useEffect(() => {
+    loadTasks();
+  }, [loadTasks]);
 
   const scrollToFirstIncompleteTask = () => {
     const element = document.querySelector(`[data-js-attention-task="true"]`);
