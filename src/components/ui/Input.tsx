@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import type { IInputProps } from "../types/Todo/types";
+import type { IInputProps } from "../../types/Todo/types";
 
 
 

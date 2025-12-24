@@ -25,3 +25,7 @@ export interface ITaskProps {
   task: ITask;
   attention?: boolean;
 }
+
+export interface ITaskPageProps {
+  task: ITask;
+}

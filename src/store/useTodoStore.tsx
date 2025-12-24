@@ -3,8 +3,10 @@ import { persist } from 'zustand/middleware';
 import { createSelector } from 'reselect';
 
 import TasksAPI from '../api/todo/TasksAPI';
+import { createChunks } from '../utils/other';
 
 import type { ITodoState } from '../types/Todo/typesStore';
+
 
 
 
@@ -15,17 +17,15 @@ export const useTodoStore = create<ITodoState>()(
       searchTaskInputQuery: '',
       addTaskInputQuery: '',
       isLoading: false,
-      error: null,
 
       loadTasks: async () => {
-        set({ isLoading: true, error: null });
+        set({ isLoading: true });
         try {
           const data = await TasksAPI.fetchTasks();
           set({ tasks: data, isLoading: false });
-          console.log( data )
-        } catch (err) {
-          set({ error: 'Ошибка при загрузке задач', isLoading: false });
-          console.error(err);
+        } catch ( error ) {
+          set({ isLoading: false });
+          console.error("Failed to load tasks:", error);
         }
       },
 
@@ -85,12 +85,19 @@ export const useTodoStore = create<ITodoState>()(
 
       clearTasks: async () => {
         const previousTasks = get().tasks;
+        if (previousTasks.length === 0) return;
 
         set({ tasks: [] });
 
         try {
-          await Promise.all(previousTasks.map(task => TasksAPI.deleteTask(task.id)));
-        } catch (error) {
+          const chunks = createChunks(previousTasks, 5);
+
+          for (const chunk of chunks) {
+            await Promise.all(
+              chunk.map((task) => TasksAPI.deleteTask(task.id))
+            );
+          }
+        } catch ( error ) {
           set({ tasks: previousTasks });
           console.error("Failed to clear tasks:", error);
         }
@@ -112,6 +119,15 @@ const getTasks = (state: ITodoState) => state.tasks;
 
 /** get search query */
 const getQuery = (state: ITodoState) => state.searchTaskInputQuery;
+
+/**
+ * This selector returns task by id
+ */
+export const selectTaskById = createSelector(
+  [getTasks, (state: ITodoState, taskId: string) => taskId],
+  (tasks, taskId) => tasks.find(task => task.id === taskId) || null
+);
+
 
 /** This selector returns tasks filtered by search query ( memo included ) */
 export const selectRenderedTasks = createSelector(

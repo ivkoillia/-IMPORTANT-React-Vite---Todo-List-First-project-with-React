@@ -1,12 +1,12 @@
-import TodoAddForm from "./TodoAddForm"
-import TodoHeader from "./TodoHeader"
-import TodoList from "./TodoList"
-import TodoSearchForm from "./TodoSearchForm"
-import TodoTasksInfo from "./TodoTasksInfo"
-import Button from "../Button"
+import TodoAddForm from "../TodoAddForm"
+import TodoHeader from "../TodoHeader"
+import TodoList from "../TodoList"
+import TodoSearchForm from "../TodoSearchForm"
+import TodoTasksInfo from "../TodoTasksInfo"
+import Button from "../../ui/Button"
 
 import { useEffect } from "react"
-import { useTodoStore } from "../../store/useTodoStore"
+import { useTodoStore } from "../../../store/useTodoStore"
 
 function Todo () {
   const loadTasks = useTodoStore((state) => state.loadTasks);

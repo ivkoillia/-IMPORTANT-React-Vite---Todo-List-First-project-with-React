@@ -1,5 +1,5 @@
 import { memo, type ChangeEvent } from "react"
-import Input from "../Input"
+import Input from "../ui/Input"
 
 import useTodoSearchTaskInputQuery from "../../hooks/todo/useTodoSearchTaskInputQuery";
 
