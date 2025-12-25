@@ -5,17 +5,21 @@ import type { IInputProps } from "../../types/Todo/types";
 
 
 const Input = forwardRef<HTMLInputElement, IInputProps>((
-  { className, ariaLabel, ...rest }, // Вытаскиваем только то, что будем менять, остальное в rest
+  props,
   ref
 ) => {
+
+  const { className, ...rest } = props;
+
   return (
     <input
       ref={ref}
-      aria-label={ariaLabel}
       className={`input ${className || ''}`}
-      {...rest} // Передаем все остальные стандартные пропсы (type, value, onChange и т.д.) автоматически
+      {...rest}
     />
   );
 });
+
+Input.displayName = "Input"
 
 export default Input;
