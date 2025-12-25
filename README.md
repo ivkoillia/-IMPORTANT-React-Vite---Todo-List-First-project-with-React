@@ -5,3 +5,14 @@ Please note that I am actively using the Gemini Code Assist extension for VS Cod
 I also invite you to take a look at the commit history, as you might find it interesting.
 
 Important Note: According to my learning roadmap, I haven't reached the Git module yet. I started using it before fully studying it, so please don't judge the Git workflow too strictly.
+
+
+How to use:
+
+git clone https://github.com/ivkoillia/-IMPORTANT-React-Vite---Todo-List-First-project-with-React.git
+cd -IMPORTANT-React-Vite---Todo-List-First-project-with-React
+
+npm install
+
+npm run json-server
+npm run dev
